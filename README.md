@@ -1,16 +1,37 @@
-# sms_gateway
+# Flutter SMS GATEWAY
 
-A new Flutter project.
+Flutter sms gateway is an android app to send sms. It supports sending delivery reports
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter application.
+Clone the app and run locally to get started.
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+pip install foobar
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Usage
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+to use the app simply supply the url for your messages source and the call back url to send messages statuses.
+Make sure your api returns the json array as shown below
+
+```python
+[
+ {
+    "id": "b0cb1a67-51a5-46d0-9718-6e4c73a66666",
+    "phone": "255XXXXXXX",
+    "message":"",
+    "status": "queued"
+  }
+]
+```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
