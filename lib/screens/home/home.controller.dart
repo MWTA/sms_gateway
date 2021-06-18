@@ -98,12 +98,12 @@ class HomeController extends GetxController {
           message: message.message,
           status: message.status,
         );
-        // telephony.sendSms(
-        //   to: message.phone,
-        //   message: message.message,
-        //   isMultipart: message.message.length > 160,
-        //   statusListener: listener,
-        // );
+        telephony.sendSms(
+          to: message.phone,
+          message: message.message,
+          isMultipart: message.message.length > 160,
+          statusListener: listener,
+        );
         queuedMessages.remove(message);
         sentMessages.add(message);
       });
