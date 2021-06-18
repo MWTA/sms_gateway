@@ -40,16 +40,12 @@ class HomeController extends GetxController {
     getLinks();
     gateWayisEnabled.value = await _homeRepository.getGatewayStatus();
     //if (gateWayisEnabled.value) {
-    AndroidAlarmManager.periodic(
-      Duration(seconds: 3),
-      messagesAlarmId,
-      printHello,
-    );
+    // AndroidAlarmManager.periodic(
+    //   Duration(seconds: 3),
+    //   messagesAlarmId,
+    //   getMessages,
+    // );
     //}
-  }
-
-  void printHello() {
-    print('Alarm Fired at ${DateTime.now()}');
   }
 
   void getMessages() async {
@@ -57,6 +53,7 @@ class HomeController extends GetxController {
 
     if (result != null) {
       queuedMessages.addAll(result.obs);
+      sendMessages();
     }
   }
 
@@ -81,11 +78,11 @@ class HomeController extends GetxController {
   void sendMessages() async {
     int i = 0;
     while (i < queuedMessages.length) {
-      await _sendSMS(queuedMessages[i]);
-      if (gateWayisEnabled.value) {
-        queuedMessages.removeAt(i);
-        i = 0;
+      if (!gateWayisEnabled.value) {
+        break;
       }
+      await _sendSMS(queuedMessages[i]);
+      i = 0;
     }
   }
 
@@ -107,6 +104,7 @@ class HomeController extends GetxController {
         //   isMultipart: message.message.length > 160,
         //   statusListener: listener,
         // );
+        queuedMessages.remove(message);
         sentMessages.add(message);
       });
     }
