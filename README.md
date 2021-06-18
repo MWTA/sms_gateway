@@ -7,7 +7,7 @@ Flutter sms gateway is an android app to send sms. It supports sending delivery 
 Clone the app and run locally to get started.
 
 ```bash
-pip install foobar
+https://github.com/codeblock-dev/sms_gateway.git
 ```
 
 ## Usage
@@ -24,6 +24,17 @@ Make sure your api returns the json array as shown below
     "status": "queued"
   }
 ]
+```
+
+## Permissions
+
+The app requires the following permissions
+
+```python
+INTERNET
+SEND_SMS
+RECEIVE_BOOT_COMPLETED
+WAKE_LOCK
 ```
 
 ## Contributing
