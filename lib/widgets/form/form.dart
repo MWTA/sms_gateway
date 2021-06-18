@@ -44,31 +44,29 @@ class _AppFormState extends State<AppForm> {
       if (widget.inputs[i].isRequired) {
         validators.add(FormBuilderValidators.required(context));
       }
-      switch (widget.inputs[i].type.toString()) {
-        case 'dropdown':
+      switch (widget.inputs[i].type) {
+        case Type.dropdown:
           form.add(
             FormBuilderDropdown(
               name: widget.inputs[i].name,
               style: _inputStyle(),
               decoration: _inputDecoration(labelText: widget.inputs[i].label),
-              // initialValue: 'Male',
               hint: Text('Select ${widget.inputs[i].label}'),
               validator: FormBuilderValidators.compose(validators),
-              items: [
-                for (var j = 0; j < widget.inputs[i].options!.length; j++)
-                  {
-                    "value": widget.inputs[i].options![j].value,
-                    "label": widget.inputs[i].options![j].label
-                  },
-              ]
-                  .map((option) => DropdownMenuItem(
-                      value: option['value'],
-                      child: Text(option['label'] ?? '')))
+              items: widget.inputs[i].options
+                  .map(
+                    (option) => DropdownMenuItem(
+                      value: option.value,
+                      child: Text(
+                        option.label,
+                      ),
+                    ),
+                  )
                   .toList(),
             ),
           );
           break;
-        case 'text':
+        case Type.text:
           form.add(
             FormBuilderTextField(
               name: widget.inputs[i].name,
@@ -78,7 +76,29 @@ class _AppFormState extends State<AppForm> {
             ),
           );
           break;
-        case 'date':
+        case Type.phone:
+          form.add(
+            FormBuilderTextField(
+              name: widget.inputs[i].name,
+              style: _inputStyle(),
+              validator: FormBuilderValidators.compose(validators),
+              decoration: _inputDecoration(labelText: widget.inputs[i].label),
+              keyboardType: TextInputType.phone,
+            ),
+          );
+          break;
+        case Type.number:
+          form.add(
+            FormBuilderTextField(
+              name: widget.inputs[i].name,
+              style: _inputStyle(),
+              validator: FormBuilderValidators.compose(validators),
+              decoration: _inputDecoration(labelText: widget.inputs[i].label),
+              keyboardType: TextInputType.number,
+            ),
+          );
+          break;
+        case Type.date:
           form.add(
             FormBuilderDateTimePicker(
               name: widget.inputs[i].name,

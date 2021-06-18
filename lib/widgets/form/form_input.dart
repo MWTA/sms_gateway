@@ -5,7 +5,7 @@ class FormInput {
     required this.type,
     required this.value,
     required this.isRequired,
-    this.options,
+    required this.options,
   });
 
   String name;
@@ -13,7 +13,7 @@ class FormInput {
   String label;
   Type type;
   bool isRequired;
-  List<Option>? options;
+  List<Option> options = [];
 }
 
 class Option {
