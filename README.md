@@ -33,9 +33,12 @@ The app requires the following permissions
 ```python
 INTERNET
 SEND_SMS
-RECEIVE_BOOT_COMPLETED
-WAKE_LOCK
+RECEIVE_SMS
 ```
+
+## Additions and Optimization
+
+Current the gateway only runs in foreground. We are looking to add background capabitlities in future. For further additions and contributions please have a look on how to contribute
 
 ## Contributing
 

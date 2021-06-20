@@ -14,23 +14,35 @@ class AddLinkForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 260,
+      height: 350,
       padding: EdgeInsets.only(right: 20, left: 20, top: 20),
       child: Obx(
         () => AppForm(
           onSubmit: (value) {
             _homeController.storeLinks(
-                value['messagesLink'], value['responseLink']);
+              value['messagesLink'],
+              value['responseLink'],
+              value['newMessageLink'],
+            );
             Get.back();
           },
           inputs: [
             FormInput(
-                name: 'messagesLink',
-                label: 'Messages link',
-                type: Type.text,
-                value: _homeController.messagesLink.value,
-                isRequired: true,
-                options: []),
+              name: 'messagesLink',
+              label: 'Messages link',
+              type: Type.text,
+              value: _homeController.messagesLink.value,
+              isRequired: true,
+              options: [],
+            ),
+            FormInput(
+              name: 'newMessageLink',
+              label: 'New message link',
+              type: Type.text,
+              value: _homeController.newMessageLink.value,
+              isRequired: false,
+              options: [],
+            ),
             FormInput(
               name: 'responseLink',
               label: 'Response link',

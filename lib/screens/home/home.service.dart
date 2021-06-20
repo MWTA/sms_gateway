@@ -33,10 +33,27 @@ class HomeService {
   Future<Message?> sendResponse(String messageId, {String? status}) async {
     String baseUrl = await _homeRepository.getLink(name: 'responseLink');
     try {
-      final response = await _httpService.post(
+      final response = await _httpService.put(
         url: '$baseUrl/$messageId',
         body: {
           'status': status ?? 'delivered',
+        },
+      );
+      return Message.fromJson(response.data);
+    } on Exception catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<Message?> uploadNewMessage(String phone, {String? body}) async {
+    String baseUrl = await _homeRepository.getLink(name: 'newMessageLink');
+    try {
+      final response = await _httpService.post(
+        url: '$baseUrl',
+        body: {
+          'phone': phone,
+          'body': body ?? '',
         },
       );
       return Message.fromJson(response.data);

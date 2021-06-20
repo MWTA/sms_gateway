@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sms_gateway/screens/home/add_links.dart';
 import 'package:sms_gateway/screens/home/home.controller.dart';
+import 'package:sms_gateway/screens/home/message.model.dart';
 
 class HomeView extends StatelessWidget {
   final HomeController _homeController = Get.put(HomeController());
@@ -101,10 +102,10 @@ class HomeView extends StatelessWidget {
                         children: <Widget>[
                           Obx(
                             () => _countText(_homeController
-                                .deliveredMessages.length
+                                .incomingMessages.length
                                 .toString()),
                           ),
-                          _tileText('Delivered messages'),
+                          _tileText('Received messages'),
                         ],
                       ),
                     ),
@@ -120,10 +121,10 @@ class HomeView extends StatelessWidget {
                         children: <Widget>[
                           Obx(
                             () => _countText(_homeController
-                                .failedMessages.length
+                                .uploadedMessages.length
                                 .toString()),
                           ),
-                          _tileText('Failed messages'),
+                          _tileText('Synced messages'),
                         ],
                       ),
                     ),
@@ -179,33 +180,18 @@ class HomeView extends StatelessWidget {
                   () => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _consoleText(
-                        _homeController.currentMessage.value.phone != ''
-                            ? 'Sending to:'
-                            : '',
-                        fontSize: 15,
-                        color: Color(0xff216e85),
-                      ),
-                      _consoleText(
-                        _homeController.currentMessage.value.phone,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      _consoleText(
-                        _homeController.currentMessage.value.phone != ''
-                            ? 'Message:'
-                            : '',
-                        fontSize: 15,
-                        color: Color(0xff216e85),
-                      ),
-                      _consoleText(
-                        _homeController.currentMessage.value.message,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                      )
+                      _homeController.currenReceivedMessage.value.phone == ''
+                          ? SizedBox.shrink()
+                          : _consoleMessage(
+                              true,
+                              _homeController.currenReceivedMessage.value,
+                            ),
+                      _homeController.currentSendingMessage.value.phone == ''
+                          ? SizedBox.shrink()
+                          : _consoleMessage(
+                              false,
+                              _homeController.currentSendingMessage.value,
+                            ),
                     ],
                   ),
                 ),
@@ -214,6 +200,41 @@ class HomeView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _consoleMessage(bool incomingMessage, Message message) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _consoleText(
+          message.phone != ''
+              ? incomingMessage
+                  ? 'New message from'
+                  : 'Sending to:'
+              : '',
+          fontSize: 15,
+          color: Color(0xff216e85),
+        ),
+        _consoleText(
+          message.phone,
+          fontSize: 15,
+          fontWeight: FontWeight.normal,
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        _consoleText(
+          message.phone != '' ? 'Message:' : '',
+          fontSize: 15,
+          color: Color(0xff216e85),
+        ),
+        _consoleText(
+          message.message,
+          fontSize: 15,
+          fontWeight: FontWeight.normal,
+        )
+      ],
     );
   }
 
