@@ -26,6 +26,15 @@ Make sure your api returns the json array as shown below
 ]
 ```
 
+to upload incoming message to your remote server make provide a post end point which will accept the following http body
+
+```python
+ {
+    "phone": "255XXXXXXX",
+    "message":"incoming message goes here",
+  }
+```
+
 ## Permissions
 
 The app requires the following permissions

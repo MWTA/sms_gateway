@@ -53,7 +53,7 @@ class HomeService {
         url: '$baseUrl',
         body: {
           'phone': phone,
-          'body': body ?? '',
+          'message': body ?? '',
         },
       );
       return Message.fromJson(response.data);
